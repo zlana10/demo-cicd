@@ -21,7 +21,8 @@ pipeline {
 
         stage('Packaging and Pushing image') {
             steps {
-                withDockerRegistry(credentialsId: 'dockerhub', url: 'https://hub.docker.com') {
+                script{
+                    sh 'eco "hungbeo003 | docker login -u hungltse04132@gmail.com --password-stdin"'
                     sh 'docker build -t hungltse04132/demo-cicd-springboot .'
                     sh 'docker push hungltse04132/demo-cicd-springboot'
                 }
