@@ -21,16 +21,14 @@ pipeline {
 
         stage('Packaging and Pushing image') {
             steps {
-                script{
-                    docker.withRegistry(DOCKER_REGISTRY_URL, DOCKER_REGISTRY_CREDENTIALS) {
+                withDockerRegistry(credentialsId: 'dockerhub', url: DOCKER_REGISTRY_URL) {
                         sh 'docker build -t hunglt1312/demo-cicd-springboot .'
                         sh 'docker push hunglt1312/demo-cicd-springboot'
-                    }
                 }
             }
         }
 
-        /* stage('Deploy MySQL to DEV') {
+         stage('Deploy MySQL to DEV') {
             steps {
                 echo 'Deploying and cleaning'
                 sh 'docker image pull mysql:8.0'
@@ -43,7 +41,7 @@ pipeline {
                 sh 'sleep 20'
                 sh "docker exec -i demo-cicd-mysql mysql --user=root --password=${MYSQL_ROOT_LOGIN_PSW} < mysql_script"
             }
-        } */
+        }
 
         stage('Deploy Spring Boot to DEV') {
             steps {
