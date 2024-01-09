@@ -6,8 +6,7 @@ pipeline {
     }
     environment {
         MYSQL_ROOT_LOGIN = credentials('root-mysql-password')
-        DOCKER_REGISTRY_CREDENTIALS = credentials('dockerhub')
-        DOCKER_REGISTRY_URL = 'https://hub.docker.com'
+        DOCKER_REGISTRY_URL = 'https://index.docker.io/v1/'
     }
 	 stages {
 
@@ -19,25 +18,18 @@ pipeline {
             }
         }
 
-        stage('Check Docker Installation') {
-            steps {
-                script {
-                    // Check if Docker is installed
-                    def dockerInstalled = tool 'docker'
-                    if (dockerInstalled) {
-                        echo "Docker is installed at: ${dockerInstalled}"
-                    } else {
-                        error "Docker not found. Please install Docker and configure it in Jenkins."
-                    }
-                }
-            }
-        }
-
         stage('Packaging and Pushing image') {
             steps {
-                withDockerRegistry(credentialsId: 'dockerhub', url: DOCKER_REGISTRY_URL) {
-                        sh 'docker build -t hunglt1312/demo-cicd-springboot .'
-                        sh 'docker push hunglt1312/demo-cicd-springboot'
+                script {
+                     // Set PATH explicitly
+                    def dockerPath = tool 'docker'
+                    env.PATH = "${dockerPath}/bin:${env.PATH}"
+
+                    withDockerRegistry(credentialsId: 'dockerhub', url: DOCKER_REGISTRY_URL) {
+                            sh 'docker build -t hunglt1312/demo-cicd-springboot .'
+                            sh 'docker push hunglt1312/demo-cicd-springboot'
+                        }
+                    }
                 }
             }
         }
