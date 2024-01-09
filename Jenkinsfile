@@ -21,9 +21,11 @@ pipeline {
 
         stage('Packaging and Pushing image') {
             steps {
-                docker.withRegistry(DOCKER_REGISTRY_URL, DOCKER_REGISTRY_CREDENTIALS) {
-                    sh 'docker build -t hunglt1312/demo-cicd-springboot .'
-                    sh 'docker push hunglt1312/demo-cicd-springboot'
+                script{
+                    docker.withRegistry(DOCKER_REGISTRY_URL, DOCKER_REGISTRY_CREDENTIALS) {
+                        sh 'docker build -t hunglt1312/demo-cicd-springboot .'
+                        sh 'docker push hunglt1312/demo-cicd-springboot'
+                    }
                 }
             }
         }
