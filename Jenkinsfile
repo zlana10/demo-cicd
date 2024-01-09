@@ -6,6 +6,8 @@ pipeline {
     }
     environment {
         MYSQL_ROOT_LOGIN = credentials('mysql-root')
+        DOCKER_REGISTRY_CREDENTIALS = credentials('dockerhub')
+        DOCKER_REGISTRY_URL = 'https://hub.docker.com'
     }
 	 stages {
 
@@ -17,9 +19,9 @@ pipeline {
             }
         }
 
-        stage('Packaging/Pushing image') {
+        stage('Packaging and Pushing image') {
             steps {
-                withDockerRegistry(credentialsId: 'dockerhub', url: 'https://hub.docker.com/repositories') {
+                docker.withRegustry(DOCKER_REGISTRY_URL, DOCKER_REGISTRY_CREDENTIALS) {
                     sh 'docker build -t hunglt1312/demo-cicd-springboot .'
                     sh 'docker push hunglt1312/demo-cicd-springboot'
                 }
