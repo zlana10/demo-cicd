@@ -28,7 +28,6 @@ pipeline {
                     withDockerRegistry(credentialsId: 'dockerhub', url: DOCKER_REGISTRY_URL) {
                             sh 'docker build -t hunglt1312/demo-cicd-springboot .'
                             sh 'docker push hunglt1312/demo-cicd-springboot'
-                        }
                     }
                 }
             }
