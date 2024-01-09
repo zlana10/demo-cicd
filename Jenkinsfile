@@ -19,6 +19,20 @@ pipeline {
             }
         }
 
+        stage('Check Docker Installation') {
+            steps {
+                script {
+                    // Check if Docker is installed
+                    def dockerInstalled = tool 'docker'
+                    if (dockerInstalled) {
+                        echo "Docker is installed at: ${dockerInstalled}"
+                    } else {
+                        error "Docker not found. Please install Docker and configure it in Jenkins."
+                    }
+                }
+            }
+        }
+
         stage('Packaging and Pushing image') {
             steps {
                 withDockerRegistry(credentialsId: 'dockerhub', url: DOCKER_REGISTRY_URL) {
