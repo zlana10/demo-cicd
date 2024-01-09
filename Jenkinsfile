@@ -25,10 +25,10 @@ pipeline {
                     def dockerPath = tool 'docker'
                     env.PATH = "${dockerPath}/bin:${env.PATH}"
 
-                    withDockerRegistry(credentialsId: 'dockerhub', url: DOCKER_REGISTRY_URL) {
+                            sh 'echo "hungbeo003 | docker login -u hungltaws@gmail.com --password-stdin"'
                             sh 'docker build -t hunglt1312/demo-cicd-springboot .'
                             sh 'docker push hunglt1312/demo-cicd-springboot'
-                    }
+
                 }
             }
         }
