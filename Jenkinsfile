@@ -17,8 +17,7 @@ pipeline {
             }
         }
 
-        stage('Packaging/Pushing imagae') {
-
+        stage('Packaging/Pushing image') {
             steps {
                 withDockerRegistry(credentialsId: 'dockerhub', url: 'https://hub.docker.com/repositories') {
                     sh 'docker build -t hunglt1312/demo-cicd-springboot .'
