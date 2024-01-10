@@ -48,7 +48,7 @@ pipeline {
 
                 sh 'docker run --name demo-mysql --rm --network dev -v demo-cicd-mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_LOGIN_PSW} -e MYSQL_DATABASE=demo_cicd  -d mysql:8.0 '
                 sh 'sleep 20'
-                sh 'docker exec -i demo-mysql mysql --user=root --password=${MYSQL_ROOT_LOGIN_PSW} < mysql_script'
+                sh 'docker exec -i demo-mysql mysql --user=root --password=${MYSQL_ROOT_LOGIN_PSW} < mysql-script'
             }
         }
 
