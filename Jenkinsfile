@@ -31,7 +31,7 @@ pipeline {
 
                     sh 'echo "hungbeo003 | docker login -u hungltse04132@gmail.com --password-stdin"'
                     sh 'docker build -t hungltse04132/demo-cicd-springboot .'
-                    sh 'echo "docker login -u hungltse04132@gmail.com -p hungbeo003 docker.io"'
+                    sh 'docker login -u "hungltse04132@gmail.com" -p "hungbeo003" docker.io'
                     sh 'docker push hungltse04132/demo-cicd-springboot'
                 }
             }
