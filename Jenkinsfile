@@ -5,7 +5,7 @@ pipeline {
         maven 'my-maven'
     }
     environment {
-        MYSQL_ROOT_LOGIN = credentials('mysql-root')
+        MYSQL_ROOT_LOGIN_PSW = credentials('mysql-root')
         DOCKER_REGISTRY_CREDENTIALS = credentials('dockerhub')
         DOCKER_REGISTRY_URL = 'https://hub.docker.com'
     }
