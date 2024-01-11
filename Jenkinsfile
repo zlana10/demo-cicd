@@ -46,7 +46,7 @@ pipeline {
                 sh 'echo y | docker container prune '
                 sh 'docker volume rm demo-cicd-mysql || echo "no volume"'
 
-                sh 'docker run --name demo-mysql --rm --network dev  --publish 3306:3306 -v demo-cicd-mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_LOGIN_PSW} -e MYSQL_DATABASE=demo_cicd -e SET GLOBAL allowPublicKeyRetrieval=true  -d mysql:8.0 '
+                sh 'docker run --name demo-mysql --rm --network dev  --publish 3306:3306 -v demo-cicd-mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_LOGIN_PSW} -e MYSQL_DATABASE=demo_cicd -d mysql:8.0 '
                 sh 'sleep 20'
                 sh 'docker inspect -f {{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}} demo-mysql'
                 sh 'docker exec -it demo-mysql mysql -u root -p ${MYSQL_ROOT_LOGIN_PSW}< mysql-script'
