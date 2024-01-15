@@ -19,7 +19,7 @@ public class VideoController {
         this.videoRepository = videoRepository;
     }
 
-    @PostMapping(path = "/create")
+    @PostMapping(path = "/add")
     public @ResponseBody String createNewVideo(@RequestParam String title, @RequestParam String url){
         Video video = new Video();
         video.setTitle(title);
