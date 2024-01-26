@@ -46,7 +46,7 @@ pipeline {
                 sh 'echo y | docker container prune '
                 sh 'docker volume rm demo-cicd-mysql || echo "no volume"'
 
-                sh 'docker run --name demo-mysql --rm --network dev  --publish 3306:3306 -v demo-cicd-mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_LOGIN_PSW} -e MYSQL_DATABASE=demo_cicd -d mysql:8.0 '
+                sh 'docker run --name demo-mysql --rm --network dev  --publish 3306:3306 -v demo-cicd-mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_LOGIN_PWD} -e MYSQL_DATABASE=demo_cicd -d mysql:8.0 '
             }
         }
 
