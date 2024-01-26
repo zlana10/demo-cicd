@@ -45,8 +45,8 @@ pipeline {
                 sh 'docker container stop demo-cicd-mysql || echo "this container does not exist" '
                 sh 'echo y | docker container prune '
                 sh 'docker volume rm demo-cicd-mysql || echo "no volume"'
-
                 sh 'docker run --name demo-mysql --rm --network dev  --publish 3306:3306 -v demo-cicd-mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_LOGIN_PWD} -e MYSQL_DATABASE=demo_cicd -d mysql:8.0 '
+                sh 'sleep 20'
             }
         }
 
@@ -57,7 +57,6 @@ pipeline {
                 sh 'docker container stop demo-cicd-springboot || echo "this container does not exist" '
                 sh 'docker network create dev || echo "this network exists"'
                 sh 'echo y | docker container prune '
-
                 sh 'docker container run -d --rm --name demo-cicd-springboot -p 8081:8081 --network dev hungltse04132/demo-cicd-springboot'
             }
         }
