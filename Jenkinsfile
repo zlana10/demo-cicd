@@ -5,9 +5,9 @@ pipeline {
         maven 'my-maven'
     }
     environment {
-        MYSQL_ROOT_LOGIN_PSW = credentials('mysql-root')
-        DOCKER_REGISTRY_CREDENTIALS = credentials('dockerhub')
-        DOCKER_REGISTRY_URL = 'https://hub.docker.com'
+        MYSQL_ROOT_LOGIN_PWD = credentials('mysql-root-pwd')
+        DOCKER_HUB_LOGIN_PWD = credentials('docker-hub-pwd')
+        DOCKER_REGISTRY_URL = 'docker.io'
     }
 	 stages {
 
@@ -29,10 +29,9 @@ pipeline {
                     // Verify Docker version
                     sh 'docker --version'
 
-                    sh 'echo "hungbeo003 | docker login -u hungltse04132@gmail.com --password-stdin"'
-                    sh 'docker rmi hungltse04132/demo-cicd-springboot'
+                    sh 'echo "${DOCKER_HUB_LOGIN_PWD} | docker login -u hungltse04132@gmail.com --password-stdin"'
                     sh 'docker build -t hungltse04132/demo-cicd-springboot .'
-                    sh 'docker login -u "hungltse04132@gmail.com" -p "hungbeo003" docker.io'
+                    sh 'docker login -u "hungltse04132@gmail.com" -p "${DOCKER_HUB_LOGIN_PWD}" ${DOCKER_REGISTRY_URL}'
                     sh 'docker push hungltse04132/demo-cicd-springboot'
                 }
             }
